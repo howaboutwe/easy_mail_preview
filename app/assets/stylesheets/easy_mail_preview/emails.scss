@@ -1,0 +1,48 @@
+#easy_mail_preview {
+  #mailer_container {
+    float: left;
+    width: 50%;
+  }
+
+  #mail_methods_container {
+    margin-top: 10px;
+  }
+
+  .mail_methods {
+    display: none;
+  }
+
+  #arguments_container {
+    margin-top: 10px;
+  }
+
+  .arguments {
+    display: none;
+  }
+
+  .arguments table th {
+    text-align: left;
+    padding-right: 5px;
+  }
+
+  .arguments table th.optional {
+    color: #CCC;
+  }
+
+  .arguments table input.argument {
+    width: 800px;
+    font-size: x-large;
+  }
+
+  #email_preview input[type=submit] {
+    margin-top: 15px;
+    background: lightBlue;
+    font-size: x-large;
+  }
+
+  #preview_frame {
+    margin-top: 25px;
+    width: 1000px;
+    height: 800px;
+  }
+}
