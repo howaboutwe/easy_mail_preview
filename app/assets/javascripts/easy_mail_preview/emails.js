@@ -4,7 +4,7 @@ EasyMailPreview = {
   },
 
   preview: function(evt) {
-    url = "/email_previews/emails/show/";
+    url = EasyMailPreview.rootPath + "emails/show/";
     url += EasyMailPreview.mailerAndMethod();
     var argCount =
       $(EasyMailPreview.selectedMethodArgumentsSelector() + ' input').length;

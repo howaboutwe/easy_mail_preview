@@ -1,53 +1,59 @@
 <div id="easy_mail_preview">
-<form id="email_preview">
-  <div id="mailer_container">
-    <label>Mailer</label>
-    <div>
-      <%= select_tag('mailer', options_for_select(@mailers.map(&:name))) %>
-    </div>
-  </div>
-  <div id="mail_methods_container">
-    <label>Mail methods</label>
-    <% @mailers.each do |mailer| %>
-      <% mailer_id = "mail_methods_#{mailer.name}" %>
-      <div id="<%= mailer_id %>" class="mail_methods">
-        <%= select_tag(
-          "mail_method_#{mailer.name}",
-          options_for_select(mailer.mail_methods.map(&:name))
-        ) %>
+  <form id="email_preview">
+    <div id="mailer_container">
+      <label>Mailer</label>
+      <div>
+        <%= select_tag('mailer', options_for_select(@mailers.map(&:name))) %>
       </div>
-    <% end %>
-  </div>
-  
-  <div id="arguments_container">
-    <label>Arguments (enter Ruby to be eval'd)</label>
-    <% @mailers.each do |mailer| %>
-      <% mailer_id = "mail_methods_#{mailer.name}" %>
-      <% mailer.mail_methods.each do |mail_method| %>
-        <% mail_method_id = mailer_id + "_#{mail_method.name}" %>
-        <div id="<%= mail_method_id %>" class="arguments">
-          <% if mail_method.arguments.empty? %>
-            (No arguments)
-          <% else %>
-            <table>
-              <% mail_method.arguments.each_with_index do |argument, i| %>
-                <% argument_id = mail_method_id + "_" + i.to_s %>
-                <tr>
-                  <th class="<%= argument.required? ? 'required' : 'optional' %>">
-                    <%= argument.name %>
-                  </th>
-                  <td><input name="<%= argument_id %>" class="argument"></td>
-                </tr>
-            <% end %>
-            </table>
-          <% end %>
+    </div>
+    <div id="mail_methods_container">
+      <label>Mail methods</label>
+      <% @mailers.each do |mailer| %>
+        <% mailer_id = "mail_methods_#{mailer.name}" %>
+        <div id="<%= mailer_id %>" class="mail_methods">
+          <%= select_tag(
+            "mail_method_#{mailer.name}",
+            options_for_select(mailer.mail_methods.map(&:name))
+          ) %>
         </div>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+    
+    <div id="arguments_container">
+      <label>Arguments (enter Ruby to be eval'd)</label>
+      <% @mailers.each do |mailer| %>
+        <% mailer_id = "mail_methods_#{mailer.name}" %>
+        <% mailer.mail_methods.each do |mail_method| %>
+          <% mail_method_id = mailer_id + "_#{mail_method.name}" %>
+          <div id="<%= mail_method_id %>" class="arguments">
+            <% if mail_method.arguments.empty? %>
+              (No arguments)
+            <% else %>
+              <table>
+                <% mail_method.arguments.each_with_index do |argument, i| %>
+                  <% argument_id = mail_method_id + "_" + i.to_s %>
+                  <tr>
+                    <th class="<%= argument.required? ? 'required' : 'optional' %>">
+                      <%= argument.name %>
+                    </th>
+                    <td><input name="<%= argument_id %>" class="argument"></td>
+                  </tr>
+              <% end %>
+              </table>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
 
-  <input type="submit" value="Preview" />
-</form>
+    <input type="submit" value="Preview" />
+  </form>
 
-<iframe id="preview_frame"></iframe>
+  <iframe id="preview_frame"></iframe>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    EasyMailPreview.rootPath = "<%= easy_mail_preview.root_path %>";
+  });
+</script>
