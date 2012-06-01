@@ -1,0 +1,155 @@
+<form id="email_preview">
+  <div id="mailer_container">
+    <label>Mailer</label>
+    <div>
+      <%= select_tag('mailer', options_for_select(@mailers.map(&:name))) %>
+    </div>
+  </div>
+  <div id="mail_methods_container">
+    <label>Mail methods</label>
+    <% @mailers.each do |mailer| %>
+      <% mailer_id = "mail_methods_#{mailer.name}" %>
+      <div id="<%= mailer_id %>" class="mail_methods">
+        <%= select_tag(
+          "mail_method_#{mailer.name}",
+          options_for_select(mailer.mail_methods.map(&:name))
+        ) %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div id="arguments_container">
+    <label>Arguments (enter Ruby to be eval'd)</label>
+    <% @mailers.each do |mailer| %>
+      <% mailer_id = "mail_methods_#{mailer.name}" %>
+      <% mailer.mail_methods.each do |mail_method| %>
+        <% mail_method_id = mailer_id + "_#{mail_method.name}" %>
+        <div id="<%= mail_method_id %>" class="arguments">
+          <% if mail_method.arguments.empty? %>
+            (No arguments)
+          <% else %>
+            <table>
+              <% mail_method.arguments.each_with_index do |argument, i| %>
+                <% argument_id = mail_method_id + "_" + i.to_s %>
+                <tr>
+                  <th class="<%= argument.required? ? 'required' : 'optional' %>">
+                    <%= argument.name %>
+                  </th>
+                  <td><input name="<%= argument_id %>" class="argument"></td>
+                </tr>
+            <% end %>
+            </table>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <input type="submit" value="Preview" />
+</form>
+
+<iframe id="preview_frame"></iframe>
+
+<style type="text/css">
+  #mailer_container {
+    float: left;
+    width: 50%;
+  }
+
+  #mail_methods_container {
+    margin-top: 10px;
+  }
+
+  .mail_methods {
+    display: none;
+  }
+
+  #arguments_container {
+    margin-top: 10px;
+  }
+
+  .arguments {
+    display: none;
+  }
+
+  .arguments table th {
+    text-align: left;
+    padding-right: 5px;
+  }
+
+  .arguments table th.optional {
+    color: #CCC;
+  }
+
+  .arguments table input.argument {
+    width: 800px;
+    font-size: x-large;
+  }
+
+  #email_preview input[type=submit] {
+    margin-top: 15px;
+    background: lightBlue;
+    font-size: x-large;
+  }
+
+  #preview_frame {
+    margin-top: 25px;
+    width: 1000px;
+    height: 800px;
+  }
+</style>
+
+<script type='text/javascript'>
+EasyMailPreview = {
+  mailerAndMethod: function() {
+    return EasyMailPreview.selectedMailer() + '_' + EasyMailPreview.selectedMethod();
+  },
+
+  preview: function(evt) {
+    url = "/email_previews/emails/show/";
+    url += EasyMailPreview.mailerAndMethod();
+    var argCount =
+      $(EasyMailPreview.selectedMethodArgumentsSelector() + ' input').length;
+    if (argCount > 0) {
+      url += "?";
+      for (var i = 0; i < argCount; i++) {
+        evalString =
+          $('input[name=mail_methods_' + EasyMailPreview.mailerAndMethod() + '_' + i + ']').val(); 
+        if (i > 0) url += '&';
+        url += "arg_" + i + "=" + escape(evalString);
+      }
+    }
+    $('#preview_frame').attr('src', url);
+    return false;
+  },
+
+  refreshSelections: function() {
+     $('.mail_methods').hide();
+     $('.mail_methods#mail_methods_' + EasyMailPreview.selectedMailer()).show();
+     $('.arguments').hide();
+     $(EasyMailPreview.selectedMethodArgumentsSelector()).show();
+  },
+
+  selectedMailer: function() {
+    return $('form#email_preview select[name=mailer]').val();
+  },
+
+  selectedMethod: function() {
+    return $('form#email_preview select[name=mail_method_' + EasyMailPreview.selectedMailer() + ']').val();
+  },
+
+  selectedMethodArgumentsSelector: function() {
+    return '.arguments#mail_methods_' + EasyMailPreview.mailerAndMethod();
+  }
+};
+
+$(document).ready(function() {
+  EasyMailPreview.refreshSelections();
+  
+  $('form#email_preview select[name=mailer]')
+      .live('change', EasyMailPreview.refreshSelections);
+  $('form#email_preview .mail_methods select')
+      .live('change', EasyMailPreview.refreshSelections);
+  $('form#email_preview').submit(EasyMailPreview.preview);
+});
+</script>
