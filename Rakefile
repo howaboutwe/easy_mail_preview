@@ -36,5 +36,18 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = false
 end
 
+require 'jeweler'
+Jeweler::Tasks.new do |gem|
+  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
+  gem.name = "easy_mail_preview"
+  gem.homepage = "http://github.com/howaboutwe/easy_mail_preview"
+  gem.license = "MIT"
+  gem.summary = %Q{Easy previews of HTML emails for your Rails app.}
+  gem.description = %Q{Easy previews of HTML emails for your Rails app.}
+  gem.email = "francis@howaboutwe.com"
+  gem.authors = ["Francis Hwang"]
+  # dependencies defined in Gemfile
+end
+Jeweler::RubygemsDotOrgTasks.new
 
 task :default => :test
