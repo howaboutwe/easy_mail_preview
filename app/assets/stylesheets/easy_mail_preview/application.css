@@ -11,3 +11,16 @@
  *= require_self
  *= require_tree .
 */
+
+body {
+  width: 1000px;
+  margin: 0px auto;
+}
+
+label {
+  font-size: x-large;
+}
+
+select {
+  font-size: x-large;
+}
