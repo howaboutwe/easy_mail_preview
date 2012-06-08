@@ -49,7 +49,7 @@ Mount the app in `config/routes`. *Important*: you should only do this in
   
 Start up your Rails server and go to your URL:
 
-    http://localhost:3000/email_previews
+![Screenshot](https://raw.github.com/howaboutwe/easy_mail_preview/master/screenshot.jpg)
 
 That's it! You will be able to select mailer classes, mail methods, and
 then fill in arguments to pass to the mail method.
