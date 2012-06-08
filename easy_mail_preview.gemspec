@@ -93,16 +93,19 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<jquery-rails>, [">= 0"])
       s.add_development_dependency(%q<sqlite3>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
     else
       s.add_dependency(%q<easy_mail_preview>, [">= 0"])
       s.add_dependency(%q<jquery-rails>, [">= 0"])
       s.add_dependency(%q<sqlite3>, [">= 0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
     end
   else
     s.add_dependency(%q<easy_mail_preview>, [">= 0"])
     s.add_dependency(%q<jquery-rails>, [">= 0"])
     s.add_dependency(%q<sqlite3>, [">= 0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
   end
 end
