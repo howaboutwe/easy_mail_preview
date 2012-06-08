@@ -25,11 +25,11 @@ destroy your data. Please don't do that.
 Usage
 -----
 
-1. Include the Gem in your Gemfile:
+Include the Gem in your Gemfile:
 
     gem 'easy_mail_preview'
 
-2. Specify which mailer classes you'd like to use for previewing in
+Specify which mailer classes you'd like to use for previewing in
    `config/initializers/easy_mail_preview`:
 
     require 'easy_mail_preview'
@@ -40,14 +40,14 @@ Usage
       ]
     end
   
-3. Mount the app in `config/routes`. *Important*: you should only do this in
+Mount the app in `config/routes`. *Important*: you should only do this in
    development mode.
 
     if Rails.env.development?
       mount EasyMailPreview::Engine, :at => 'email_previews'
     end
   
-4. Start up your Rails server and go to your URL:
+Start up your Rails server and go to your URL:
 
     http://localhost:3000/email_previews
 
