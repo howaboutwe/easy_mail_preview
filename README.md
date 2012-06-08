@@ -32,12 +32,14 @@ Include the Gem in your Gemfile:
 Specify which mailer classes you'd like to use for previewing in
    `config/initializers/easy_mail_preview`:
 
-    require 'easy_mail_preview'
+    if Rails.env.development?
+      require 'easy_mail_preview'
 
-    EasyMailPreview.setup do |config|
-      config.mailers = [
-        MessageMailer, LifecycleMailer, ExpirationMailer
-      ]
+      EasyMailPreview.setup do |config|
+        config.mailers = [
+          MessageMailer, LifecycleMailer, ExpirationMailer
+        ]
+      end
     end
   
 Mount the app in `config/routes`. *Important*: you should only do this in
